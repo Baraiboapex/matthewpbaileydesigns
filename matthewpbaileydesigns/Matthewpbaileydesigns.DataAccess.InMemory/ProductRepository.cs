@@ -61,6 +61,20 @@ namespace Matthewpbaileydesigns.DataAccess.InMemory
             }
         }
 
+        public Product Find(string id)
+        {
+            Product product = products.Find(p => p.Id == id);
+
+            if (product != null)
+            {
+                return product;
+            }
+            else
+            {
+                throw new Exception("Product Not Found");
+            }
+        }
+
         public IQueryable<Product> ProductCollection()
         {
             return products.AsQueryable();
