@@ -72,7 +72,7 @@ namespace Matthewpbaileydesigns.DataAccess.InMemory
 
             if (productToDelete != null)
             {
-                products.Remove(product);
+                products.Remove(productToDelete);
             }
             else
             {
