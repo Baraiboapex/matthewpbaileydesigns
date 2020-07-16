@@ -111,7 +111,7 @@ namespace Matthewpbaileydesigns.WebUI.Controllers
             {
                 context.Delete(Id);
                 context.Commit();
-                return View(product);
+                return RedirectToAction("Index");
             }
 
         }
