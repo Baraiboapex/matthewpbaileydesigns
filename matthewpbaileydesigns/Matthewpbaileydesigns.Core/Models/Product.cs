@@ -14,8 +14,8 @@ namespace Matthewpbaileydesigns.Core.Models
         [StringLength(20)]
         [DebuggerDisplay("Product Name")]
         public string Name { get; set; }
-        [Range(0,100000)]
         public string Description { get; set; }
+        [Range(0, 100000)]
         public decimal Price { get; set; }
         public string Category { get; set; }
         public string Image { get; set; }

@@ -25,7 +25,7 @@ namespace Matthewpbaileydesigns.DataAccess.InMemory
 
         public void Commit()
         {
-            cache["product"] = products;
+            cache["products"] = products;
         }
 
         public void Insert(Product p)
@@ -50,6 +50,20 @@ namespace Matthewpbaileydesigns.DataAccess.InMemory
         public Product Find(Product prod)
         {
             Product product = products.Find(p => p.Id == prod.Id);
+
+            if (product != null)
+            {
+                return product;
+            }
+            else
+            {
+                throw new Exception("Product Not Found");
+            }
+        }
+
+        public Product Find(string id)
+        {
+            Product product = products.Find(p => p.Id == id);
 
             if (product != null)
             {
