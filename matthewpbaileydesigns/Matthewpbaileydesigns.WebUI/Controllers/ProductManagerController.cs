@@ -1,4 +1,5 @@
 ﻿using Matthewpbaileydesigns.Core.Models;
+using Matthewpbaileydesigns.Core.ViewModels;
 using Matthewpbaileydesigns.DataAccess.InMemory;
 using System;
 using System.Collections.Generic;
@@ -12,10 +13,11 @@ namespace Matthewpbaileydesigns.WebUI.Controllers
     public class ProductManagerController : Controller
     {
         ProductRepository context;
-
+        ProductCategoryRepository productCategoryContext;
         public ProductManagerController()
         {
             context = new ProductRepository();
+            productCategoryContext = new ProductCategoryRepository();
         }
 
         public ActionResult Index()
@@ -26,8 +28,12 @@ namespace Matthewpbaileydesigns.WebUI.Controllers
 
         public ActionResult Create()
         {
-            Product product = new Product();
-            return View(product);
+            ProductManageViewModel productViewModel = new ProductManageViewModel();
+
+            productViewModel.Product = new Product();
+            productViewModel.ProductCategories = productCategoryContext.ProductCategoryCollection();
+            
+            return View(productViewModel);
         }
 
         [HttpPost]
@@ -55,7 +61,12 @@ namespace Matthewpbaileydesigns.WebUI.Controllers
             }
             else
             {
-                return View(product);
+                ProductManageViewModel productViewModel = new ProductManageViewModel();
+
+                productViewModel.Product = product;
+                productViewModel.ProductCategories = productCategoryContext.ProductCategoryCollection();
+
+                return View(productViewModel);
             }
         }
 
