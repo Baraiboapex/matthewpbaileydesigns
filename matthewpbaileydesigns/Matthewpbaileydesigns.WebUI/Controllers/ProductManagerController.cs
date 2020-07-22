@@ -12,17 +12,17 @@ namespace Matthewpbaileydesigns.WebUI.Controllers
 {
     public class ProductManagerController : Controller
     {
-        ProductRepository context;
-        ProductCategoryRepository productCategoryContext;
+        InMemoryRepository<Product> context;
+        InMemoryRepository<ProductCategory> productCategoryContext;
         public ProductManagerController()
         {
-            context = new ProductRepository();
-            productCategoryContext = new ProductCategoryRepository();
+            context = new InMemoryRepository<Product>();
+            productCategoryContext = new InMemoryRepository<ProductCategory>();
         }
 
         public ActionResult Index()
         {
-            List<Product> products = context.ProductCollection().ToList();
+            List<Product> products = context.Collection().ToList();
             return View(products);
         }
 
@@ -31,7 +31,7 @@ namespace Matthewpbaileydesigns.WebUI.Controllers
             ProductManageViewModel productViewModel = new ProductManageViewModel();
 
             productViewModel.Product = new Product();
-            productViewModel.ProductCategories = productCategoryContext.ProductCategoryCollection();
+            productViewModel.ProductCategories = productCategoryContext.Collection();
             
             return View(productViewModel);
         }
@@ -64,7 +64,7 @@ namespace Matthewpbaileydesigns.WebUI.Controllers
                 ProductManageViewModel productViewModel = new ProductManageViewModel();
 
                 productViewModel.Product = product;
-                productViewModel.ProductCategories = productCategoryContext.ProductCategoryCollection();
+                productViewModel.ProductCategories = productCategoryContext.Collection();
 
                 return View(productViewModel);
             }

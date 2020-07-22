@@ -10,16 +10,16 @@ namespace Matthewpbaileydesigns.WebUI.Controllers
 {
     public class ProductCategoryController : Controller
     {
-        ProductCategoryRepository context;
+        InMemoryRepository<ProductCategory> context;
 
         public ProductCategoryController()
         {
-            context = new ProductCategoryRepository();
+            context = new InMemoryRepository<ProductCategory>();
         }
 
         public ActionResult Index()
         {
-            List<ProductCategory> products = context.ProductCategoryCollection().ToList();
+            List<ProductCategory> products = context.Collection().ToList();
             return View(products);
         }
 
@@ -93,6 +93,7 @@ namespace Matthewpbaileydesigns.WebUI.Controllers
                 return View(productCategory);
             }
         }
+
         [HttpPost]
         [ActionName("Delete")]
         public ActionResult ConfirmDelete(string Id)
