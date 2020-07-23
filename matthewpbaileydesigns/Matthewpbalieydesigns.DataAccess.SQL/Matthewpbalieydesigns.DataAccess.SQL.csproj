@@ -51,11 +51,28 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataContext.cs" />
+    <Compile Include="Migrations\202007231641245_Initial.cs" />
+    <Compile Include="Migrations\202007231641245_Initial.designer.cs">
+      <DependentUpon>202007231641245_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Matthewpbaileydesigns.Core\Matthewpbaileydesigns.Core.csproj">
+      <Project>{C50C4B37-0F45-40B4-A95E-1BF5E44BAFA5}</Project>
+      <Name>Matthewpbaileydesigns.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202007231641245_Initial.resx">
+      <DependentUpon>202007231641245_Initial.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
