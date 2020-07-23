@@ -1,6 +1,6 @@
 using Matthewpbaileydesigns.Core.Contracts;
 using Matthewpbaileydesigns.Core.Models;
-using Matthewpbaileydesigns.DataAccess.InMemory;
+using Matthewpbalieydesigns.DataAccess.SQL;
 using System;
 
 using Unity;
@@ -45,8 +45,8 @@ namespace Matthewpbaileydesigns.WebUI
 
             // TODO: Register your type's mappings here.
             // container.RegisterType<IProductRepository, ProductRepository>();
-            container.RegisterType<IRepository<Product>, InMemoryRepository<Product>>();
-            container.RegisterType<IRepository<ProductCategory>, InMemoryRepository<ProductCategory>>();
+            container.RegisterType<IRepository<Product>, SQLRepository<Product>>();
+            container.RegisterType<IRepository<ProductCategory>, SQLRepository<ProductCategory>>();
         }
     }
 }
