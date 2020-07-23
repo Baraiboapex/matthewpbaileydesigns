@@ -1,4 +1,5 @@
-﻿using Matthewpbaileydesigns.Core.Models;
+﻿using Matthewpbaileydesigns.Core.Contracts;
+using Matthewpbaileydesigns.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,16 +9,16 @@ using System.Threading.Tasks;
 
 namespace Matthewpbaileydesigns.DataAccess.InMemory
 {
-    public class InMemoryRepository<T> where T : BaseEntity
+    public class InMemoryRepository<T> : IRepository<T> where T : BaseEntity
     {
         ObjectCache cache = MemoryCache.Default;
         List<T> items;
         string className;
 
-        public InMemoryRepository() 
+        public InMemoryRepository()
         {
             className = typeof(T).Name;
-            items  = cache[className] as List<T>;
+            items = cache[className] as List<T>;
 
             if (items == null)
             {
@@ -25,7 +26,8 @@ namespace Matthewpbaileydesigns.DataAccess.InMemory
             }
         }
 
-        public void Commit() 
+
+        public void Commit()
         {
             cache[className] = items;
         }
@@ -50,19 +52,20 @@ namespace Matthewpbaileydesigns.DataAccess.InMemory
         }
 
         public T Find(string Id)
-        { 
+        {
             T t = items.Find(i => i.Id == Id);
             if (t != null)
             {
                 return t;
             }
-            else 
+            else
             {
                 throw new Exception(className + " not found");
             }
         }
 
-        public IQueryable<T> Collection() {
+        public IQueryable<T> Collection()
+        {
             return items.AsQueryable();
         }
 

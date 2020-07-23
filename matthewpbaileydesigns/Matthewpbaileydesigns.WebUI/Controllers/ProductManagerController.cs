@@ -1,4 +1,5 @@
-﻿using Matthewpbaileydesigns.Core.Models;
+﻿using Matthewpbaileydesigns.Core.Contracts;
+using Matthewpbaileydesigns.Core.Models;
 using Matthewpbaileydesigns.Core.ViewModels;
 using Matthewpbaileydesigns.DataAccess.InMemory;
 using System;
@@ -12,12 +13,13 @@ namespace Matthewpbaileydesigns.WebUI.Controllers
 {
     public class ProductManagerController : Controller
     {
-        InMemoryRepository<Product> context;
-        InMemoryRepository<ProductCategory> productCategoryContext;
-        public ProductManagerController()
+        IRepository<Product> context;
+        IRepository<ProductCategory> productCategoryContext;
+
+        public ProductManagerController(IRepository<Product> productContext, IRepository<ProductCategory> categoryContext)
         {
-            context = new InMemoryRepository<Product>();
-            productCategoryContext = new InMemoryRepository<ProductCategory>();
+            context = productContext;
+            productCategoryContext = categoryContext;
         }
 
         public ActionResult Index()

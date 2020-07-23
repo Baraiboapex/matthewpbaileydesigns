@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Matthewpbaileydesigns.Core.Contracts;
 using Matthewpbaileydesigns.Core.Models;
 using Matthewpbaileydesigns.DataAccess.InMemory;
 
@@ -10,11 +11,11 @@ namespace Matthewpbaileydesigns.WebUI.Controllers
 {
     public class ProductCategoryController : Controller
     {
-        InMemoryRepository<ProductCategory> context;
+        IRepository<ProductCategory> context;
 
-        public ProductCategoryController()
+        public ProductCategoryController(IRepository<ProductCategory> categoryContext)
         {
-            context = new InMemoryRepository<ProductCategory>();
+            context = categoryContext;
         }
 
         public ActionResult Index()
