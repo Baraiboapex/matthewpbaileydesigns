@@ -46,6 +46,9 @@ namespace Matthewpbaileydesigns.WebUI.Controllers
             }
         }
 
+        //For some reason, this controller does not work properly and always edits
+        //the entry at the top of the list on the UI regardles of the entry chosen
+        //to be edited. Debug this later!
         public ActionResult Edit(string Id)
         {
             ProductCategory productCategory = context.Find(Id);

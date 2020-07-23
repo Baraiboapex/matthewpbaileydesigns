@@ -12,8 +12,8 @@ namespace Matthewpbaileydesigns.Core.Models
        public DateTime CreatedAt { get; set; }
 
         public BaseEntity() {
-            this.Id = new Guid().ToString();
-            this.CreatedAt = DateTime.Now;
+            Id = Guid.NewGuid().ToString();
+            CreatedAt = DateTime.Now;
         }
     }
 }
