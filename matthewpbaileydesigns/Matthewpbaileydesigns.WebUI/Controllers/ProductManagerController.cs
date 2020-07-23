@@ -1,4 +1,6 @@
-﻿using Matthewpbaileydesigns.Core.Models;
+﻿using Matthewpbaileydesigns.Core.Contracts;
+using Matthewpbaileydesigns.Core.Models;
+using Matthewpbaileydesigns.Core.ViewModels;
 using Matthewpbaileydesigns.DataAccess.InMemory;
 using System;
 using System.Collections.Generic;
@@ -11,23 +13,29 @@ namespace Matthewpbaileydesigns.WebUI.Controllers
 {
     public class ProductManagerController : Controller
     {
-        ProductRepository context;
+        IRepository<Product> context;
+        IRepository<ProductCategory> productCategoryContext;
 
-        public ProductManagerController()
+        public ProductManagerController(IRepository<Product> productContext, IRepository<ProductCategory> categoryContext)
         {
-            context = new ProductRepository();
+            context = productContext;
+            productCategoryContext = categoryContext;
         }
 
         public ActionResult Index()
         {
-            List<Product> products = context.ProductCollection().ToList();
+            List<Product> products = context.Collection().ToList();
             return View(products);
         }
 
         public ActionResult Create()
         {
-            Product product = new Product();
-            return View(product);
+            ProductManageViewModel productViewModel = new ProductManageViewModel();
+
+            productViewModel.Product = new Product();
+            productViewModel.ProductCategories = productCategoryContext.Collection();
+            
+            return View(productViewModel);
         }
 
         [HttpPost]
@@ -55,7 +63,12 @@ namespace Matthewpbaileydesigns.WebUI.Controllers
             }
             else
             {
-                return View(product);
+                ProductManageViewModel productViewModel = new ProductManageViewModel();
+
+                productViewModel.Product = product;
+                productViewModel.ProductCategories = productCategoryContext.Collection();
+
+                return View(productViewModel);
             }
         }
 
