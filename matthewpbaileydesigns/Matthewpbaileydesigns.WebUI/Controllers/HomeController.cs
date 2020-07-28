@@ -1,5 +1,6 @@
 ﻿using Matthewpbaileydesigns.Core.Contracts;
 using Matthewpbaileydesigns.Core.Models;
+using Matthewpbaileydesigns.Core.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,10 +20,25 @@ namespace Matthewpbaileydesigns.WebUI.Controllers
             productCategoryContext = categoryContext;
         }
 
-        public ActionResult Index()
+        public ActionResult Index(string Category = null)
         {
-            var products = context.Collection().ToList();
-            return View(products);
+            List<Product> products;
+            List<ProductCategory> categories = productCategoryContext.Collection().ToList();
+
+            if (Category == null)
+            {
+                products = context.Collection().ToList();
+            }
+            else 
+            {
+                products = context.Collection().Where(p => p.Category == Category).ToList();
+            }
+
+            ProductListViewModel model = new ProductListViewModel();
+            model.Product = products;
+            model.ProductCategories = categories;
+
+            return View(model);
         }
 
         public ActionResult Details(string Id)
