@@ -1,0 +1,18 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Matthewpbaileydesigns.Core.Models
+{
+    public class Cart : BaseEntity
+    {
+        public virtual ICollection<CartItem> cartItems { get; set; }
+
+        public Cart()
+        {
+            this.cartItems = new List<CartItem>();
+        }
+    }
+}
