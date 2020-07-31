@@ -1,5 +1,6 @@
 ﻿using Matthewpbaileydesigns.Core.Contracts;
 using Matthewpbaileydesigns.Core.Models;
+using Matthewpbaileydesigns.Core.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ using System.Web;
 
 namespace Matthewpbaileydesigns.Services
 {
-    public class CartService
+    public class CartService : ICartService
     {
         IRepository<Product> productContext;
         IRepository<Cart> cartContext;
@@ -47,6 +48,8 @@ namespace Matthewpbaileydesigns.Services
                     cart = CreateNewCart(httpContext);
                 }
             }
+
+            return cart;
         }
 
         private Cart CreateNewCart(HttpContextBase httpContext)
@@ -63,7 +66,7 @@ namespace Matthewpbaileydesigns.Services
             return cart;
         }
 
-        public void AddToBasket(HttpContextBase httpContext, string productId)
+        public void AddToCart(HttpContextBase httpContext, string productId)
         {
             Cart cart = GetCart(httpContext, true);
             CartItem item = cart.cartItems.FirstOrDefault(i => i.ProductId == productId);
@@ -85,7 +88,7 @@ namespace Matthewpbaileydesigns.Services
             cartContext.Commit();
         }
 
-        public void RemoveFromBasket(HttpContextBase httpContext, string itemId)
+        public void RemoveFromCart(HttpContextBase httpContext, string itemId)
         {
             Cart cart = GetCart(httpContext, true);
             CartItem item = cart.cartItems.FirstOrDefault(i => i.Id == itemId);
@@ -94,6 +97,59 @@ namespace Matthewpbaileydesigns.Services
             {
                 cart.cartItems.Remove(item);
                 cartContext.Commit();
+            }
+        }
+
+        public List<CartItemViewModel> GetCartItems(HttpContextBase httpContext)
+        {
+            Cart cart = GetCart(httpContext, false);
+
+            if (cart != null)
+            {
+                var result = (
+                    from c in cart.cartItems
+                    join p in productContext.Collection()
+                    on c.ProductId equals p.Id
+                    select new CartItemViewModel()
+                    {
+                        Id = c.Id,
+                        Quantity = c.Quantity,
+                        Name = p.Name,
+                        Image = p.Image,
+                        Price = p.Price
+                    }
+                ).ToList();
+
+                return result;
+            }
+            else
+            {
+                return new List<CartItemViewModel>();
+            }
+        }
+
+        public CartSummary GetCartSummary(HttpContextBase httpContext)
+        {
+            Cart cart = GetCart(httpContext, false);
+            CartSummary cartSummary = new CartSummary(0,0);
+            if (cart != null)
+            {
+                int? cartCount = (from item in cart.cartItems select item.Quantity).Sum();
+
+                decimal? cartTotal = (from item in cart.cartItems 
+                                      join p in productContext.Collection() 
+                                      on item.ProductId equals p.Id 
+                                      select item.Quantity * p.Price
+                                      ).Sum();
+
+                cartSummary.CartCount = cartCount ?? 0;
+                cartSummary.CartTotal = cartTotal ?? decimal.Zero;
+
+                return cartSummary;
+            }
+            else
+            {
+                return cartSummary;
             }
         }
     }
