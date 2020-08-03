@@ -24,6 +24,9 @@
                     <li class="nav-item">@Html.ActionLink("Product Categories", "Index", "ProductCategory", routeValues: null, htmlAttributes: new { @class = "nav-link" })</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
+                @{ 
+                    Html.RenderAction("CartSummary", "Cart");
+                }
             </div>
         </div>
     </div>

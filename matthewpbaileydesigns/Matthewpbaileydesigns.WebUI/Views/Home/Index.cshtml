@@ -37,7 +37,7 @@
                             <br />
                             <p>@product.Description</p>
                             <br />
-                            <a href="/" class="btn btn-primary">Add To Cart</a>
+                            <a href="@Url.Action("AddToCart", "Cart", new { prodId= product.Id})" class="btn btn-primary">Add To Cart</a>
                             <br />
                         </div>
                     </div>

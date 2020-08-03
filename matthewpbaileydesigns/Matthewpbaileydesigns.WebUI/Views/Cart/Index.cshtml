@@ -1,0 +1,50 @@
+﻿@model Matthewpbaileydesigns.Core.ViewModels.CartViewmodel
+
+@{
+    ViewBag.Title = "Cart";
+}
+
+<h2>Cart</h2>
+
+<table class="table">
+    <tr>
+        <th></th>
+        <th>
+            @Html.DisplayNameFor(model => model.CartItems.SingleOrDefault().Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CartItems.SingleOrDefault().Quantity)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CartItems.SingleOrDefault().Price)
+        </th>
+        <th>
+            Total
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model.CartItems) {
+<tr>
+    <td>
+        <img class="img" style="height:140px; width:240px;" src="~/Content/ProductImages/@item.Image"/>
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Name)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Quantity)
+    </td>
+    <td>
+        @String.Format("{0:c}", item.Price * item.Quantity)
+    </td>
+    <td>
+        <a href="@Url.Action("RemoveFromCart", "Cart", new { prodId = item.Id})" class="btn btn-danger">Delete</a>
+    </td>
+</tr>
+}
+<tr>
+    <td colspan="4" style="text-align:right"><strong>Cart Total</strong></td>
+    <td>@String.Format("{0:c}", Model.CartTotal)</td>
+</tr>
+</table>

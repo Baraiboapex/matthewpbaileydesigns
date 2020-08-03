@@ -79,6 +79,8 @@ namespace Matthewpbaileydesigns.Services
                     ProductId = productId,
                     Quantity = 1
                 };
+
+                cart.cartItems.Add(item);
             }
             else
             {
@@ -93,7 +95,7 @@ namespace Matthewpbaileydesigns.Services
             Cart cart = GetCart(httpContext, true);
             CartItem item = cart.cartItems.FirstOrDefault(i => i.Id == itemId);
 
-            if (item == null)
+            if (item != null)
             {
                 cart.cartItems.Remove(item);
                 cartContext.Commit();

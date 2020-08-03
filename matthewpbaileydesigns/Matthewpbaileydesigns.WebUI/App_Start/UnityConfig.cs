@@ -1,5 +1,6 @@
 using Matthewpbaileydesigns.Core.Contracts;
 using Matthewpbaileydesigns.Core.Models;
+using Matthewpbaileydesigns.Services;
 using Matthewpbalieydesigns.DataAccess.SQL;
 using System;
 
@@ -47,6 +48,9 @@ namespace Matthewpbaileydesigns.WebUI
             // container.RegisterType<IProductRepository, ProductRepository>();
             container.RegisterType<IRepository<Product>, SQLRepository<Product>>();
             container.RegisterType<IRepository<ProductCategory>, SQLRepository<ProductCategory>>();
+            container.RegisterType<IRepository<Cart>, SQLRepository<Cart>>();
+            container.RegisterType<IRepository<CartItem>, SQLRepository<CartItem>>();
+            container.RegisterType<ICartService, CartService>();
         }
     }
 }
