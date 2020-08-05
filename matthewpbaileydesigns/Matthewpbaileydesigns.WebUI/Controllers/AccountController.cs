@@ -9,6 +9,8 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Matthewpbaileydesigns.WebUI.Models;
+using Matthewpbaileydesigns.Core.Models;
+using Matthewpbaileydesigns.Core.Contracts;
 
 namespace Matthewpbaileydesigns.WebUI.Controllers
 {
@@ -17,15 +19,11 @@ namespace Matthewpbaileydesigns.WebUI.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private IRepository<Customer> CustomerRepo;
 
-        public AccountController()
+        public AccountController(IRepository<Customer> customerRepo)
         {
-        }
-
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
-        {
-            UserManager = userManager;
-            SignInManager = signInManager;
+            CustomerRepo = customerRepo;
         }
 
         public ApplicationSignInManager SignInManager
@@ -155,6 +153,21 @@ namespace Matthewpbaileydesigns.WebUI.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    Customer customer = new Customer()
+                    {
+                        City = model.City,
+                        FirstName = model.FirstName,
+                        LastName = model.LastName,
+                        State = model.State,
+                        Street = model.Street,
+                        ZipCode = model.ZipCode,
+                        Email = model.Email,
+                        UserId = user.Id
+                    };
+
+                    CustomerRepo.Insert(customer);
+                    CustomerRepo.Commit();
+
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771

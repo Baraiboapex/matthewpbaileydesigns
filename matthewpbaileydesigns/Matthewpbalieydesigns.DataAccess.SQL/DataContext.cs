@@ -19,5 +19,6 @@ namespace Matthewpbalieydesigns.DataAccess.SQL
         public DbSet<ProductCategory> ProductCategories {get; set;}
         public DbSet<CartItem> CartItem { get; set; }
         public DbSet<Cart> Cart { get; set; }
+        public DbSet<Customer> Customer { get; set; }
     }
 }
