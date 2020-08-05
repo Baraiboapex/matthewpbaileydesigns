@@ -50,6 +50,7 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.Web.Extensions" />
@@ -89,6 +90,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\CartControllerTest.cs" />
+    <Compile Include="Mocks\MockContext.cs" />
+    <Compile Include="Mocks\MockHttpContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controllers\HomeControllerTest.cs" />
   </ItemGroup>
@@ -99,6 +103,14 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Matthewpbaileydesigns.Core\Matthewpbaileydesigns.Core.csproj">
+      <Project>{C50C4B37-0F45-40B4-A95E-1BF5E44BAFA5}</Project>
+      <Name>Matthewpbaileydesigns.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Matthewpbaileydesigns.Services\Matthewpbaileydesigns.Services.csproj">
+      <Project>{10B4B657-F9D7-4CEB-82E6-3083DA8E2034}</Project>
+      <Name>Matthewpbaileydesigns.Services</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Matthewpbaileydesigns.WebUI\Matthewpbaileydesigns.WebUI.csproj">
       <Project>{F1E1E516-6F77-4794-94AF-75F8A1DB0F36}</Project>
       <Name>Matthewpbaileydesigns.WebUI</Name>
