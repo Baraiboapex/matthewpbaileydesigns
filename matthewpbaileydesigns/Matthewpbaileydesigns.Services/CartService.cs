@@ -154,5 +154,12 @@ namespace Matthewpbaileydesigns.Services
                 return cartSummary;
             }
         }
+
+        public void ClearCart(HttpContextBase httpContext)
+        {
+            Cart cart = GetCart(httpContext, false);
+            cart.cartItems.Clear();
+            cartContext.Commit();
+        }
     }
 }

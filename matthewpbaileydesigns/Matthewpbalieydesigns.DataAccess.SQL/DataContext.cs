@@ -20,5 +20,7 @@ namespace Matthewpbalieydesigns.DataAccess.SQL
         public DbSet<CartItem> CartItem { get; set; }
         public DbSet<Cart> Cart { get; set; }
         public DbSet<Customer> Customer { get; set; }
+        public DbSet<Order> Order { get; set; }
+        public DbSet<OrderItem> OrderItem { get; set; }
     }
 }

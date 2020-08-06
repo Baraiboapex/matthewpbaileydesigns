@@ -1,4 +1,5 @@
 ﻿using Matthewpbaileydesigns.Core.Contracts;
+using Matthewpbaileydesigns.Core.Models;
 using Matthewpbaileydesigns.Core.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -11,10 +12,12 @@ namespace Matthewpbaileydesigns.WebUI.Controllers
     public class CartController : Controller
     {
         ICartService cartService;
+        IOrderService orderService;
 
-        public CartController(ICartService cartService)
+        public CartController(ICartService cartService, IOrderService orderService)
         {
             this.cartService = cartService;
+            this.orderService = orderService;
         }
 
         // GET: Cart
@@ -58,6 +61,31 @@ namespace Matthewpbaileydesigns.WebUI.Controllers
             var cartSummary = cartService.GetCartSummary(this.HttpContext);
 
             return PartialView(cartSummary);
+        }
+
+        public ActionResult CheckOut()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult CheckOut(Order order)
+        {
+            var cartItems = cartService.GetCartItems(this.HttpContext);
+            order.OrderStatus = "Order Created";
+
+            order.OrderStatus = "Payment Processed";
+            orderService.CreateOrder(order, cartItems);
+            cartService.ClearCart(this.HttpContext);
+
+            return RedirectToAction("ThankYou", new { OrderId = order.Id });
+        }
+
+        public ActionResult ThankYou(string orderId)
+        {
+            ViewBag.OrderId = orderId;
+
+            return View();
         }
     }
 }

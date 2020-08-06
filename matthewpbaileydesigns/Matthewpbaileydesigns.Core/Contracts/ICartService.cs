@@ -14,5 +14,6 @@ namespace Matthewpbaileydesigns.Core.Contracts
         void RemoveFromCart(HttpContextBase httpContext, string itemId);
         List<CartItemViewModel> GetCartItems(HttpContextBase httpContext);
         CartSummary GetCartSummary(HttpContextBase httpContext);
+        void ClearCart(HttpContextBase httpContext);
     }
 }
